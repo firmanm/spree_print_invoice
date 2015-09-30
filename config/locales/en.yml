@@ -1,7 +1,13 @@
----
 en:
   spree:
     print_invoice:
+      firstname: First Name
+      lastname: Last Name
+      delete_all: Delete All Documents
+      date: Date
+      order_number: Order Number
+      document_type: Document Type
+      generate_documents: "Generate Documents"
       documents: Documents
       documents_for_order: "Documents for order %{order_number}"
       buttons:

@@ -34,7 +34,9 @@ prawn_document(force_download: true) do |pdf|
 
   # Footer
   if Spree::PrintInvoice::Config[:use_footer]
-    render 'spree/printables/shared/footer', pdf: pdf
+    # pdf.repeat(:all) do
+      render 'spree/printables/shared/footer', pdf: pdf
+    # end
   end
 
   # Page Number

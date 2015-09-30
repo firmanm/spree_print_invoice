@@ -1,0 +1,37 @@
+<% content_for :page_title do %>
+  <%= Spree.t('print_invoice.documents') %>
+  <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: :documents } %>
+<% end %>
+
+<% if @bookkeeping_documents.any? %>
+  <table class="table" id="listing_orders" data-hook>
+    <thead>
+      <tr data-hook="printables_index_headers">
+        <th><%= Spree.t('print_invoice.date') %></th>
+        <th><%= Spree.t('print_invoice.document_type') %></th>
+        <th><%= Spree.t('print_invoice.order_number') %></th>
+        <th><%= Spree.t('email') %></th>
+        <th><%= Spree.t('total') %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @bookkeeping_documents.each do |bookkeeping_document| %>
+      <tr data-hook="admin_printables_index_rows" class="<%= cycle('odd', 'even') %>">
+        <td><%= l bookkeeping_document.created_at.to_date %></td>
+        <td><%= link_to bookkeeping_document.document_type.titleize, spree.admin_order_bookkeeping_document_path(@order.number, bookkeeping_document, format: :pdf), target: '_blank' %></td>
+        <td><%= bookkeeping_document.number %></td>
+        <td><%= bookkeeping_document.email %></td>
+        <td><%= bookkeeping_document.display_total.to_html %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div style="padding-top:10px">
+    <%= link_to Spree.t('print_invoice.delete_all'), spree.destroy_admin_order_bookkeeping_documents_path(@order.number), 'data-confirm' => 'Are you sure want to activate this merchant?', :method => :delete, :class => 'btn btn-danger' %>
+  </div>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::BookkeepingDocument)) %>,
+    <%= link_to(Spree.t('print_invoice.generate_documents'), spree.admin_order_bookkeeping_documents_path(@order.number), method: :post) if can? :create, Spree::BookkeepingDocument %>!
+  </div>
+<% end %>

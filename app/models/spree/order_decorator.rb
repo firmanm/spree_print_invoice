@@ -9,10 +9,6 @@ Spree::Order.class_eval do
 
   delegate :number, :date, to: :invoice, prefix: true
 
-  # Create a new invoice before transitioning to complete
-  #
-  state_machine.before_transition to: :complete, do: :invoice_for_order
-
   # Backwards compatibility stuff. Please don't use these methods, rather use the
   # ones on Spree::BookkeepingDocument
   #
@@ -36,8 +32,8 @@ Spree::Order.class_eval do
     bookkeeping_documents.find_by!(template: template).file_path
   end
 
-  def invoice_for_order
-    bookkeeping_documents.create(template: 'invoice')
-    bookkeeping_documents.create(template: 'packaging_slip')
+  def invoice_for_order!
+    bookkeeping_documents.create(template: 'invoice') unless self.invoice
+    bookkeeping_documents.create(template: 'packaging_slip') unless self.packaging_slip
   end
 end
