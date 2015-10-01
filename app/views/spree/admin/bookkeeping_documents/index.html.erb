@@ -82,7 +82,7 @@
     <% @bookkeeping_documents.each do |bookkeeping_document| %>
       <tr data-hook="admin_printables_index_rows" class="<%= cycle('odd', 'even') %>">
         <td><%= l bookkeeping_document.created_at.to_date %></td>
-        <td><%= link_to bookkeeping_document.document_type.titleize, spree.admin_order_bookkeeping_document_path(bookkeeping_document.printable.number, bookkeeping_document, format: :pdf) %></td>
+        <td><%= link_to bookkeeping_document.document_type.titleize, spree.admin_order_bookkeeping_document_path(bookkeeping_document.printable.number, bookkeeping_document, format: :pdf), target: '_blank' %></td>
         <td><%= bookkeeping_document.number %></td>
         <td><%= bookkeeping_document.firstname %></td>
         <td><%= bookkeeping_document.lastname %></td>
