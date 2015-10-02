@@ -34,7 +34,30 @@ invoice.payments.each do |payment|
 end
 
 totals_table_width = [0.875, 0.125].map { |w| w * pdf.bounds.width }
+
 pdf.table(totals, column_widths: totals_table_width) do
   row(0..6).style align: :right
   column(0).style borders: [], font_style: :bold
 end
+
+
+# stamp
+pdf.create_stamp("approved") do
+        pdf.line_width = 2
+        pdf.rotate(30, :origin => [-5, -5]) do
+            pdf.stroke_color "FF3333"
+            pdf.stroke_ellipse [0, 0], 29, 15
+            pdf.stroke_color "000000"
+            pdf.fill_color "993333"
+            pdf.font("Times-Roman") do
+                if invoice.printable.payment_state == "paid"
+                  pdf.draw_text "paid", :at => [-12,-3], :size => 15, :style => :bold
+                else
+                  pdf.draw_text "unpaid", :at => [-22,-3], :size => 15, :style => :bold
+                end
+            end
+            pdf.fill_color "000000"
+        end
+    end
+
+    pdf.stamp_at "approved", [550, 170]
