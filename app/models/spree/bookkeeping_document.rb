@@ -38,8 +38,12 @@ module Spree
     # If the document is called from the view with some method it doesn't know,
     # just call the view object. It should know.
     def method_missing(method_name, *args, &block)
-      if view.respond_to? method_name
-        view.send(method_name, *args, &block)
+      if [:display_total, :bill_address, :ship_address, :shipping_methods, :items, :display_item_total, :adjustments, :shipments, :payments].include? method_name
+        if view.respond_to? method_name
+          view.send(method_name, *args, &block)
+        else
+          super
+        end
       else
         super
       end
