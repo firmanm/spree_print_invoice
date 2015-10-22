@@ -1,4 +1,5 @@
 include Forwardable
+include Spree::DisplayMoney
 
 module Spree
   class Printables::BaseView

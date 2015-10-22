@@ -24,7 +24,7 @@ invoice.payments.each do |payment|
     pdf.make_cell(
       content: Spree.t(:payment_via,
       gateway: (payment.source_type || Spree.t(:unprocessed, scope: :print_invoice)),
-      number: payment.number,
+      number: payment.identifier,
       date: I18n.l(payment.updated_at.to_date, format: :long),
       scope: :print_invoice)
     ),
@@ -43,21 +43,21 @@ end
 
 # stamp
 pdf.create_stamp("approved") do
-        pdf.line_width = 2
-        pdf.rotate(30, :origin => [-5, -5]) do
-            pdf.stroke_color "FF3333"
-            pdf.stroke_ellipse [0, 0], 29, 15
-            pdf.stroke_color "000000"
-            pdf.fill_color "993333"
-            pdf.font("Times-Roman") do
-                if invoice.printable.payment_state == "paid"
-                  pdf.draw_text "paid", :at => [-12,-3], :size => 15, :style => :bold
-                else
-                  pdf.draw_text "unpaid", :at => [-22,-3], :size => 15, :style => :bold
-                end
-            end
-            pdf.fill_color "000000"
-        end
-    end
+  pdf.line_width = 2
+  pdf.rotate(30, :origin => [-5, -5]) do
+      pdf.stroke_color "FF3333"
+      pdf.stroke_ellipse [0, 0], 29, 15
+      pdf.stroke_color "000000"
+      pdf.fill_color "993333"
+      pdf.font("Times-Roman") do
+          if invoice.printable.payment_state == "paid"
+            pdf.draw_text "paid", :at => [-12,-3], :size => 15, :style => :bold
+          else
+            pdf.draw_text "unpaid", :at => [-22,-3], :size => 15, :style => :bold
+          end
+      end
+      pdf.fill_color "000000"
+  end
+end
 
-    pdf.stamp_at "approved", [550, 170]
+pdf.stamp_at "approved", [150, 340]

@@ -1,3 +1,5 @@
+include Spree::DisplayMoney
+
 module Spree
   class Printables::Invoice::Adjustment
     extend Spree::DisplayMoney

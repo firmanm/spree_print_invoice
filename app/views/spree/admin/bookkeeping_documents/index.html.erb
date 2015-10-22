@@ -2,80 +2,17 @@
   <%= t(:documents, scope: [:spree, :print_invoice]) %>
 <% end %>
 
-<% content_for :table_filter do %>
-  <div data-hook="admin_orders_index_search">
-    <%= search_form_for [:admin, @search] do |f| %>
-      <%= f.hidden_field :template_eq, value: params[:q][:template_eq] %>
-      <div class="row">
-        <div class="date-range-filter col-md-8">
-          <div class="form-group">
-            <%= label_tag :q_created_at_gt, Spree.t(:date_range) %>
-            <div class="row no-padding-bottom">
-              <div class="col-md-6">
-                <div class="input-group">
-                  <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from form-control', value: params[:q][:created_at_gt], placeholder: Spree.t(:start) %>
-                  <span class="input-group-addon">
-                    <i class="icon icon-calendar"></i>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="input-group">
-                  <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to form-control', value: params[:q][:created_at_lt], placeholder: Spree.t(:stop) %>
-                  <span class="input-group-addon">
-                    <i class="icon icon-calendar"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <%= label_tag :q_number_cont, Spree.t(:printable_number, number: '') %>
-            <%= f.text_field :number_cont, class: 'form-control js-quick-search-target' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <%= label_tag :q_firstname_start, Spree.t(:first_name_begins_with) %>
-            <%= f.text_field :firstname_start, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <%= label_tag :q_lastname_start, Spree.t(:last_name_begins_with) %>
-            <%= f.text_field :lastname_start, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <%= label_tag :q_email_cont, Spree.t(:email) %>
-            <%= f.text_field :email_cont, class: 'form-control js-filterable' %>
-          </div>
-        </div>
-      </div>
-      <div data-hook="admin_orders_index_search_buttons" class="form-actions">
-        <%= button Spree.t(:filter_results), 'search' %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-<%= render partial: 'spree/admin/shared/index_table_options', locals: { collection: @bookkeeping_documents } %>
-
 <% if @bookkeeping_documents.any? %>
   <table class="table" id="listing_orders" data-hook>
     <thead>
       <tr data-hook="printables_index_headers">
-        <th><%= sort_link @search, :created_at, Spree.t('print_invoice.date') %></th>
-        <th><%= sort_link @search, :template, Spree.t('print_invoice.document_type') %></th>
-        <th><%= sort_link @search, :number, Spree.t('print_invoice.order_number') %></th>
-        <th><%= sort_link @search, :firstname, Spree.t('print_invoice.firstname') %></th>
-        <th><%= sort_link @search, :lastname, Spree.t('print_invoice.lastname') %></th>
-        <th><%= sort_link @search, :email, Spree.t('email') %></th>
-        <th><%= sort_link @search, :total, Spree.t('total') %></th>
+        <th><%= Spree.t('print_invoice.date') %></th>
+        <th><%= Spree.t('print_invoice.document_type') %></th>
+        <th><%= Spree.t('print_invoice.order_number') %></th>
+        <th><%= Spree.t('print_invoice.firstname') %></th>
+        <th><%= Spree.t('print_invoice.lastname') %></th>
+        <th><%= Spree.t('email') %></th>
+        <th><%= Spree.t('total') %></th>
       </tr>
     </thead>
     <tbody>
@@ -94,7 +31,7 @@
   </table>
 <% else %>
   <div class="alert alert-info no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::BookkeepingDocument)) %>,
+    <%= Spree.t(:no_resource_found, resource: Spree::BookkeepingDocument) %>,
   </div>
 <% end %>
 

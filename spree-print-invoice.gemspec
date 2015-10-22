@@ -5,7 +5,7 @@ $LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_print_invoice'
-  s.version     = '3.0.0'
+  s.version     = '2.0.0'
   s.summary     = 'Print invoices and slips from Spree Commerce'
   s.description = s.summary
   s.required_ruby_version = '>= 2.1.0'

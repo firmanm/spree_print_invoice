@@ -20,7 +20,6 @@ module Spree
     scope :invoices, -> { where(template: 'invoice') }
 
     before_create :copy_view_attributes
-    after_save :after_save_actions
 
     # An instance of Spree::Printable::#{YourModel}::#{YourTemplate}Presenter
     #
